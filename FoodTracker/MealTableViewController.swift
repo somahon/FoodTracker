@@ -13,6 +13,17 @@ class MealTableViewController: UITableViewController {
     //MARK: Properties
     var meals = [Meal]()
     
+    //MARK: Actions
+    @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            //Add a new meal
+            let newIndexPath = IndexPath(row: meals.count, section: 0)
+            meals.append(meal)
+            
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+    }
+    
     //MARK: Private methods
     private func loadSampleMeals() {
         let photo1 = UIImage(named: "meal1")
@@ -51,7 +62,6 @@ class MealTableViewController: UITableViewController {
         return meals.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "MealTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MealTableViewCell else {
