@@ -34,7 +34,15 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
 
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        let isPresentinginAddMealMode = presentingViewController is UINavigationController
+        
+        if isPresentinginAddMealMode {
+            dismiss(animated: true, completion: nil)
+        } else if let owningNavigationController = navigationController {
+            owningNavigationController.popViewController(animated: true)
+        } else {
+            fatalError("The MealViewController is not inside a navigation controller.")
+        }
     }
     
     //MARK: Navigation
